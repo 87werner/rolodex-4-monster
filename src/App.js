@@ -11,11 +11,17 @@ class App extends Component {
       monsters: [],
       searchField: "",
     };
+
+    // this.handleChange = this.handleChange.bind(this) // if you don't use arrow function.
   }
   componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) => this.setState({ monsters: users }));
+  }
+
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value }) // Has lexical scoping, this. is bind to app Component where it is defined.  
   }
 
   render() {
@@ -25,11 +31,11 @@ class App extends Component {
     );
     return (
       <div className="App">
-        
+        <h1>Werner's Monster Rolodex</h1>
         <SearchBox 
          type="search"
          placeholder="search monsters"
-         handleChange={(e) => this.setState({ searchField: e.target.value })}
+         handleChange={this.handleChange}
         
         />
         <CardList monsters={filteredMonsters} />
